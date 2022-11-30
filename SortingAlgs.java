@@ -117,7 +117,9 @@ public class SortingAlgs {
 		// Após o intervalo ter sido definido, o algoritmo Shell Sort propriamente dito é rodado
 		do {
 			intervalo = intervalo / 3; // O intervalo é divido por 3 de modo a obter o maior valor da sequência menor do que o tamanho n
+			// O vetor é dividido logicamente em sub vetores composto de elementos separados por um intervalo e para cada um deles é aplicado o insertion sort
 			for (int i=intervalo; i<n; ++i) {
+				// Mesma lógica do Insertion Sort, só que implementado sobre o Shell Sort
 				int chave = A[i];
 				int j = i;
 				while (j >= intervalo && A[j-intervalo] > chave) {
@@ -127,20 +129,6 @@ public class SortingAlgs {
 				A[j] = chave; // O valor chave passa a ocupar o índice imediatamente a direita do primeiro valor menor que a chave encontrado
 			}
 		} while (intervalo != 1);
-		
-		// (LÓGICA DO ALGORITMO) O vetor é dividido logicamente em sub vetores composto de elementos separados por um intervalo e para cada um deles é aplicado o insertion sort
-		/* Segue um exemplo de execução abaixo:
-		 * 	   [3, 4, 1, 5, 6, 2]  (vetor desordenado de 6 elementos e intervalo igual a 2)
-		 * 
-		 * Passo 1: Dividir em sub vetores com elementos separados pelo intervalo
-		 * 	   [3', 4*, 1', 5*, 6', 2*]  --> ': [3, 1, 6] e *: [4, 5, 2]
-		 * Passo 2: Aplicar o insertion sort em cada sub vetor
-		 * 	   [1', 2*, 3', 4*, 6', 5*] | ': [3, 1, 6] -> [1, 3, 6] e *: [4, 5, 2] -> [2, 4, 5]  
-		 * Passo 3: Dividir o vetor sub vetores com elementos separados por 1
-		 * 	   [1', 2', 3', 4', 6', 5']  (sub vetor com o mesmo tamanho do vetor original)
-		 * Passo 4: Aplicar o insertion sort no sub vetor
-		 * 	   [1', 2', 3', 4', 5', 6']  --> Vetor ordenado!!!
-		*/ 
 		
 		// Código retirado do livro Projeto de Algoritmos - Capítulo 4: Ordenação.
 		// Disponível em: https://www2.dcc.ufmg.br/livros/algoritmos-java/cap4/transp/completo1/cap4.pdf, pág. 26. 
@@ -238,4 +226,7 @@ public class SortingAlgs {
 	}
 	
 	// 6 - Algoritmo QuickSort
+	public static void quickSort(int[] A) {
+		
+	}
 }
