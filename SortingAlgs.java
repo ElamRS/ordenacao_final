@@ -147,13 +147,13 @@ public class SortingAlgs {
 		/* O Método utilizado para a ordenação pode ser entendido da seguinte maneira:
 		 *  Imagine duas pilhas já ordenadas
 		 *  		 2      1
-		 *   		 3	    4
+		 *   		 3	4
 		 *   		 6      7
 		 *  Iniciando pelo topo, pegamos o 1 e o 2, como o 1 é menor, na hora de construir uma nova lista colocaremos o 1 primeiro
 		 *    [1, , , , , ]
 		 *  Agora checa-se se o 2 é menor que o próximo elemento da segunda lista, o 4, ele é, então é adicionado a lista ordenada
 		 *    [1, 2, , , , ]
-		 * 	Movemos agora para o próximo elemento da sub-lista à esquerda, o 3, e o comparamos com o elemento 4. Como 3 é menor, ele é posto na lista
+		 *  Movemos agora para o próximo elemento da sub-lista à esquerda, o 3, e o comparamos com o elemento 4. Como 3 é menor, ele é posto na lista
 		 *    [1, 2, 3, , , ]
 		 *  Partimos agora para o 6 e o comparamos com o 4, como o 4 é menor ele é que será adicionado a lista
 		 *    [1, 2, 3, 4, , ]
