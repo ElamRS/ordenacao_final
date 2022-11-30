@@ -3,25 +3,6 @@ package Ordenação;
 import java.util.Random;
 
 public class SortingAlgs {
-	public static void main(String[] args) {
-		Random random = new Random();
-		
-		int v[] = new int[30]; 
-		
-		// popular o vetor
-		for (int i=0; i<v.length; ++i) {v[i] = random.nextInt(10);}
-		
-		// Imprimir o vetor antes de ser ordenado
-		//for (int i=0; i<v.length; ++i) {System.out.print(v[i] + " ");}
-		
-		// Ordenar o vetor
-		shellSort(v);
-		System.out.println();
-		// Imprimir o vetor após ter sido ordenado
-		//for (int i=0; i<v.length; ++i) {System.out.print(v[i] + " ");}
-	}
-	
-	
 	// 1 - Algoritmo BubbleSort
 	public static int[] bubbleSort(int[] A) {
 		int flag = 0; // flag para armazenar quantas trocas de posição ocorreram
@@ -36,7 +17,7 @@ public class SortingAlgs {
 					A[j] = A[i];
 					A[i] = aux;
 					flag++; // A flag de troca de posições aumenta em 1 o seu valor
-				}
+				} 
 			}
 			// Caso não haja troca de posição, isso quer dizer que o vetor já está ordenado
 			if (flag==0) {break;}
@@ -226,7 +207,41 @@ public class SortingAlgs {
 	}
 	
 	// 6 - Algoritmo QuickSort
-	public static void quickSort(int[] A) {
+	public static void quickSort(int[] vetor, int inicio, int fim){
+		if (inicio < fim) {
+		    int posiPivo = separar(vetor, inicio, fim);  
+		    quickSort(vetor, inicio, posiPivo);
+		    quickSort(vetor, posiPivo + 1, fim);
+	    }
+	}
+
+	//Método para separar as listas até retornar pivô
+	private static int separar (int a[], int inicio, int fim) {
+		int meio = (inicio + fim) / 2;
+		int pivo = a[meio];
+		int i = inicio - 1;
+		int j = fim + 1;
 		
+		while (true) {
+			do {
+				i++;
+			} while(a[i] < pivo);
+			
+			do {
+				j--;
+			} while(a[j] > pivo);
+			
+			if (i >= j) {
+				return j;
+			}
+			trocar(a, i, j);
+		}
+	}
+
+	//Método para trocar posições no vetor
+	private static void trocar(int[] A, int i, int j) {
+		int temp = A[i];
+		A[i] = A[j];
+		A[j] = temp;
 	}
 }
