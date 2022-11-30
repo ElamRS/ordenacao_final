@@ -26,7 +26,7 @@ public class Simulacao {
 		// Vetor que contém os valores das seeds
 		int[] seeds = {13, 21, 34, 55, 89, 144};
 		// Vetor que contém os tamanhos dos vetores que serão ordenados
-		int[] tamanhos = {10000};
+		int[] tamanhos = {10000, 30000, 90000, 270000, 810000, 2430000, 65610000}; // 10000, 30000, 90000, 270000, 810000, 2430000, 65610000
 		
 		// Laço for que irá fazer com que seja rodada uma simulação para cada um dos 7 tamanhos de vetores pedidos
 		for (int i=0; i<tamanhos.length; ++i) {
@@ -132,7 +132,7 @@ public class Simulacao {
 				for (int i=0; i<10; ++i) {
 					inicio = System.currentTimeMillis();
 					SortingAlgs.insertionSort(v);
-					fim = System.currentTimeMillis();
+					fim = System.currentTimeMillis(); 
 					soma += fim-inicio;
 				}
 				break;
@@ -154,12 +154,10 @@ public class Simulacao {
 				break;
 			case 5: // Quick Sort
 				for (int i=0; i<10; ++i) {
-					/*inicio = System.currentTimeMillis();
-					SortingAlgs.quickSort(v, 0, v.length);
+					inicio = System.currentTimeMillis();
+					SortingAlgs.quickSort(v, 0, v.length-1);
 					fim = System.currentTimeMillis();
 					soma += fim-inicio;
-					*/
-					soma += 0;
 				}
 				break;
 			default:
