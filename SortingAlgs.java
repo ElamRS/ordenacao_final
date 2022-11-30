@@ -6,19 +6,19 @@ public class SortingAlgs {
 	public static void main(String[] args) {
 		Random random = new Random();
 		
-		int v[] = new int[100];
+		int v[] = new int[30]; 
 		
 		// popular o vetor
-		for (int i=0; i<v.length; ++i) {v[i] = random.nextInt(1000);}
+		for (int i=0; i<v.length; ++i) {v[i] = random.nextInt(10);}
 		
 		// Imprimir o vetor antes de ser ordenado
-		for (int i=0; i<v.length; ++i) {System.out.print(v[i] + " ");}
+		//for (int i=0; i<v.length; ++i) {System.out.print(v[i] + " ");}
 		
 		// Ordenar o vetor
-		mergeSort(v);
+		shellSort(v);
 		System.out.println();
 		// Imprimir o vetor após ter sido ordenado
-		for (int i=0; i<v.length; ++i) {System.out.print(v[i] + " ");}
+		//for (int i=0; i<v.length; ++i) {System.out.print(v[i] + " ");}
 	}
 	
 	
@@ -104,7 +104,47 @@ public class SortingAlgs {
 	}
 	
 	// 4 - Algoritmo Shell Sort
-	
+	public static void shellSort(int[] A) {
+		// A variável n armazena o tamanho do vetor
+		int n = A.length;
+		// Nesta implementação utilizaremos a formula de Knuth como forma de determinar o tamanho do intervalo
+		int intervalo = 1; // o intervalo é iniciado com valor igual a 1 para que a fórmula possa ser aplicada
+		// O valor do intervalo será incrementado pelo seu triplo adicionado de 1, enquanto este for menor que n
+		do {
+			intervalo = intervalo * 3 + 1; // intervalo = {1, 4, 13, 40, 121, 364, ...}
+		} while (intervalo < n); // Apesar do while rodar enquanto o intervalo for menor que n, este sempre sai com um valor maior que o tamanho do vetor
+		
+		// Após o intervalo ter sido definido, o algoritmo Shell Sort propriamente dito é rodado
+		do {
+			intervalo = intervalo / 3; // O intervalo é divido por 3 de modo a obter o maior valor da sequência menor do que o tamanho n
+			for (int i=intervalo; i<n; ++i) {
+				int chave = A[i];
+				int j = i;
+				while (j >= intervalo && A[j-intervalo] > chave) {
+					A[j] = A[j - intervalo];
+					j = j - intervalo; // j é decrementado pelo valor do intervalo
+				}
+				A[j] = chave; // O valor chave passa a ocupar o índice imediatamente a direita do primeiro valor menor que a chave encontrado
+			}
+		} while (intervalo != 1);
+		
+		// (LÓGICA DO ALGORITMO) O vetor é dividido logicamente em sub vetores composto de elementos separados por um intervalo e para cada um deles é aplicado o insertion sort
+		/* Segue um exemplo de execução abaixo:
+		 * 	   [3, 4, 1, 5, 6, 2]  (vetor desordenado de 6 elementos e intervalo igual a 2)
+		 * 
+		 * Passo 1: Dividir em sub vetores com elementos separados pelo intervalo
+		 * 	   [3', 4*, 1', 5*, 6', 2*]  --> ': [3, 1, 6] e *: [4, 5, 2]
+		 * Passo 2: Aplicar o insertion sort em cada sub vetor
+		 * 	   [1', 2*, 3', 4*, 6', 5*] | ': [3, 1, 6] -> [1, 3, 6] e *: [4, 5, 2] -> [2, 4, 5]  
+		 * Passo 3: Dividir o vetor sub vetores com elementos separados por 1
+		 * 	   [1', 2', 3', 4', 6', 5']  (sub vetor com o mesmo tamanho do vetor original)
+		 * Passo 4: Aplicar o insertion sort no sub vetor
+		 * 	   [1', 2', 3', 4', 5', 6']  --> Vetor ordenado!!!
+		*/ 
+		
+		// Código retirado do livro Projeto de Algoritmos - Capítulo 4: Ordenação.
+		// Disponível em: https://www2.dcc.ufmg.br/livros/algoritmos-java/cap4/transp/completo1/cap4.pdf, pág. 26. 
+	}
 	
 	// 5 - Algoritmo Merge Sort
 	public static void mergeSort(int[] A) {
@@ -143,17 +183,17 @@ public class SortingAlgs {
 	}
 	
 	// 5.1 - Método auxiliar do mergeSort
-	public static void merge(int A[], int[] esq, int[] dir) {
+	private static void merge(int A[], int[] esq, int[] dir) {
 		/* O Método utilizado para a ordenação pode ser entendido da seguinte maneira:
 		 *  Imagine duas pilhas já ordenadas
 		 *  		 2      1
-		 *   		 3	4
+		 *   		 3	    4
 		 *   		 6      7
 		 *  Iniciando pelo topo, pegamos o 1 e o 2, como o 1 é menor, na hora de construir uma nova lista colocaremos o 1 primeiro
 		 *    [1, , , , , ]
 		 *  Agora checa-se se o 2 é menor que o próximo elemento da segunda lista, o 4, ele é, então é adicionado a lista ordenada
 		 *    [1, 2, , , , ]
-		 *  Movemos agora para o próximo elemento da sub-lista à esquerda, o 3, e o comparamos com o elemento 4. Como 3 é menor, ele é posto na lista
+		 * 	Movemos agora para o próximo elemento da sub-lista à esquerda, o 3, e o comparamos com o elemento 4. Como 3 é menor, ele é posto na lista
 		 *    [1, 2, 3, , , ]
 		 *  Partimos agora para o 6 e o comparamos com o 4, como o 4 é menor ele é que será adicionado a lista
 		 *    [1, 2, 3, 4, , ]
