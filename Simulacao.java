@@ -26,7 +26,7 @@ public class Simulacao {
 		// Vetor que contém os valores das seeds
 		int[] seeds = {13, 21, 34, 55, 89, 144};
 		// Vetor que contém os tamanhos dos vetores que serão ordenados
-		int[] tamanhos = {10000, 30000, 90000, 270000, 810000, 2430000, 65610000};
+		int[] tamanhos = {10000};
 		
 		// Laço for que irá fazer com que seja rodada uma simulação para cada um dos 7 tamanhos de vetores pedidos
 		for (int i=0; i<tamanhos.length; ++i) {
@@ -154,28 +154,53 @@ public class Simulacao {
 				break;
 			case 5: // Quick Sort
 				for (int i=0; i<10; ++i) {
-					inicio = System.currentTimeMillis();
+					/*inicio = System.currentTimeMillis();
 					SortingAlgs.quickSort(v, 0, v.length);
 					fim = System.currentTimeMillis();
 					soma += fim-inicio;
+					*/
+					soma += 0;
 				}
 				break;
 			default:
 				break;
 		}
-		media = soma/10;
+		media = (double) soma/10;
 		return media;
 	}
 	
 	// Método responsável por exibir os tempos de ordenação médios de cada algoritmo para cada tamanho de vetor
 	public static void exibirTempo(double[][] exec_time_greatest, int[] tam) {
+		String algoritmo;
 		// Laço for exterior para iterar sobre os tamanhos do vetores
-		for (int i=0; i<7; ++i) {
-			System.out.println("Tempo de execução médio dos algoritmos para vetores de %d elementos." + tam[i]);
+		for (int i=0; i<tam.length; ++i) {
+			System.out.printf("Tempo de execucao medio dos algoritmos para vetores de %d elementos. \n\n", tam[i]);
 			// Laço for interior para iterar sobre cada tempo de ordenação médio
 			for (int j=0; j<6; ++j) {
-				System.out.println(j + "° Algoritmo: " + exec_time_greatest[i][j] + " milissegundos.");
+				algoritmo = nomeAlgoritmo(j);
+				System.out.printf(" %s: %.4f segundos.\n", algoritmo, exec_time_greatest[i][j]/1000);
 			}
+			System.out.println();
+		}
+	}
+	
+	// Método que fornece o nome do algoritmo a partir do seu índice
+	public static String nomeAlgoritmo(int index) {
+		switch(index) {
+			case 0:
+				return "Bubble Sort";
+			case 1:
+				return "Selection Sort";
+			case 2:
+				return "Insertion Sort";
+			case 3:
+				return "Shell Sort";
+			case 4:
+				return "Merge Sort";
+			case 5:
+				return "Quick Sort";
+			default:
+				return "Algoritmo";
 		}
 	}
 }
