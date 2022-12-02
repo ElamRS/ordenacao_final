@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class SortingAlgs {
 	// 1 - Algoritmo BubbleSort
-	public static int[] bubbleSort(int[] A) {
+	public static void bubbleSort(int[] A) {
 		int flag = 0; // flag para armazenar quantas trocas de posição ocorreram
 		// Primeiro laço de iteração que irá determinar o elemento que será comparado com os demais
 		for (int i=0; i<A.length; ++i) {
@@ -27,7 +27,7 @@ public class SortingAlgs {
 	}
 	
 	// 2 - Algoritmo Selection Sort
-	public static int[] selectionSort(int[] A) {
+	public static void selectionSort(int[] A) {
 		// Laço for para iterar por todo o vetor
 		for (int i=0; i<A.length; ++i) {
 			// A variável min, que armazena o menor índice do subarray, recebe o valor de i
@@ -53,7 +53,7 @@ public class SortingAlgs {
 	}
 	
 	// 3 - Algoritmo InsertionSort
-	public static int[] insertionSort(int[] A) {
+	public static void insertionSort(int[] A) {
 		int chave; // Variável chave, que irá armazenar o valor do i-ésimo elemento do vetor
 		// Laço for que percorre o vetor do segundo índice até seu fim
 		for (int i = 1; i<A.length; ++i) {
