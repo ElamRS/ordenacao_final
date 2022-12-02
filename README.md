@@ -1,5 +1,11 @@
 # ordenacao_final
 
+*Integrantes do Grupo*
+
+- Elam Rufino dos Santos - SP3075338
+- Ícaro Juan Santana Moreira - SP3065596 - https://github.com/IcarotX
+- Benjamin Anthony Zabala Paxi - SP3066061 - https://github.com/BenAZP
+
 Repositório dedicado ao estudo de algoritmos de ordenação.
 
 @IcarotX: https://github.com/IcarotX/Ordena.plus.
