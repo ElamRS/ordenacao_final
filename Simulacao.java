@@ -108,6 +108,8 @@ public class Simulacao {
 	
 	// Método responsável por rodar 10 vezes um mesmo algoritmos sobre um mesmo vetor e retornar a média do tempo dessas ordenações
 	public static double calc_tempo(int[] v, int a) {
+		int[] auxiliar; // Para evitar que uma vez ordenado, o vetor contamine as demais execuções por facilitar o trabalho dos algoritmos, é criado um vetor clone
+		
 		long soma = 0; // A variável soma recebe a soma de todos os tempos que os algoritmos levaram para ordenar
 		long inicio, fim; // A variável inicio armazena o tempo do sistema quando o algoritmo é chamado, e a fim quando termina
 		double media; // Como cada algoritmo será rodado 10 vezes, a média será igual a soma / 10
@@ -116,56 +118,62 @@ public class Simulacao {
 		switch (a) {
 			case 0: // Bubble Sort
 				for (int i=0; i<10; ++i) {
-					inicio = System.currentTimeMillis();
-					SortingAlgs.bubbleSort(v);
-					fim = System.currentTimeMillis();
-					soma += fim-inicio;
+					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
+					inicio = System.nanoTime();
+					SortingAlgs.bubbleSort(auxiliar);
+					fim = System.nanoTime();
+					soma += (fim-inicio);
 				}
 				break;
 			case 1: // Selection Sort
 				for (int i=0; i<10; ++i) {
-					inicio = System.currentTimeMillis();
-					SortingAlgs.selectionSort(v);
-					fim = System.currentTimeMillis();
-					soma += fim-inicio;
+					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
+					inicio = System.nanoTime();
+					SortingAlgs.selectionSort(auxiliar);
+					fim = System.nanoTime();
+					soma += (fim-inicio);
 				}
 				break;
 			case 2: // Insertion Sort
 				for (int i=0; i<10; ++i) {
-					inicio = System.currentTimeMillis();
-					SortingAlgs.insertionSort(v);
-					fim = System.currentTimeMillis(); 
-					soma += fim-inicio;
+					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
+					inicio = System.nanoTime();
+					SortingAlgs.insertionSort(auxiliar);
+					fim = System.nanoTime(); 
+					soma += (fim-inicio);
 				}
 				break;
 			case 3: // Shell Sort
 				for (int i=0; i<10; ++i) {
-					inicio = System.currentTimeMillis();
-					SortingAlgs.shellSort(v);
-					fim = System.currentTimeMillis();
-					soma += fim-inicio;
+					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
+					inicio = System.nanoTime();
+					SortingAlgs.shellSort(auxiliar);
+					fim = System.nanoTime();
+					soma += (fim-inicio);
 				}
 				break;
 			case 4: // Merge Sort
 				for (int i=0; i<10; ++i) {
-					inicio = System.currentTimeMillis();
-					SortingAlgs.mergeSort(v);
-					fim = System.currentTimeMillis();
-					soma += fim-inicio;
+					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
+					inicio = System.nanoTime();
+					SortingAlgs.mergeSort(auxiliar);
+					fim = System.nanoTime();
+					soma += (fim-inicio);
 				}
 				break;
 			case 5: // Quick Sort
 				for (int i=0; i<10; ++i) {
-					inicio = System.currentTimeMillis();
-					SortingAlgs.quickSort(v, 0, v.length-1);
-					fim = System.currentTimeMillis();
-					soma += fim-inicio;
+					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
+					inicio = System.nanoTime();
+					SortingAlgs.quickSort(auxiliar, 0, auxiliar.length-1);
+					fim = System.nanoTime();
+					soma += (fim-inicio);
 				}
 				break;
 			default:
 				break;
 		}
-		media = (double) soma/10;
+		media = (double) soma / Math.pow(10, 10); // Divide-se por 10 pois a variável soma armazena a soma de 10 execuções e divide-se por 10^9 por ser em nanossegundo
 		return media;
 	}
 	
@@ -178,7 +186,7 @@ public class Simulacao {
 			// Laço for interior para iterar sobre cada tempo de ordenação médio
 			for (int j=0; j<6; ++j) {
 				algoritmo = nomeAlgoritmo(j);
-				System.out.printf(" %s: %.4f segundos.\n", algoritmo, exec_time_greatest[i][j]/1000);
+				System.out.printf(" %s: %.5f segundos.\n", algoritmo, exec_time_greatest[i][j]);
 			}
 			System.out.println();
 		}
