@@ -2,7 +2,7 @@ package Ordenação;
 
 import java.util.Random;
 
-//   Tempo Estimado de Execução ~ unknown
+//   Tempo Estimado de Execução: 10 horas
 
 /*
   *  - pouco eficientes (BubleSort, SelectSort e InsertionSort)
