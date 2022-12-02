@@ -1,5 +1,3 @@
-package Ordenação;
-
 import java.util.Random;
 
 //   Tempo Estimado de Execução ~ unknown
@@ -29,15 +27,13 @@ public class Simulacao {
 		int[] seeds = {13, 21, 34, 55, 89, 144};
 		// Vetor que contém os tamanhos dos vetores que serão ordenados
 		int[] tamanhos = {10000, 30000, 90000, 270000, 810000, 2430000, 65610000}; // 10000, 30000, 90000, 270000, 810000, 2430000, 65610000
-		
 		// Laço for que irá fazer com que seja rodada uma simulação para cada um dos 7 tamanhos de vetores pedidos
 		for (int i=0; i<tamanhos.length; ++i) {
 			exec_time_greatest[i] = rodarSimulacao(seeds, tamanhos[i]); // A cada chamada são passadas as seeds e o i-ésimo tamanho
 			// O vetor 2D recebe os tempos médio de ordenação dos vetores para cada tamanho n
+			exibirTempo(exec_time_greatest, tamanhos, i);
+			// A idéia é que a medida que os algoritmos forem rodados para um certo tamanho de vetor e o tempo de execução for calculado, ele já ser exibido, impedindo que o console fique horas e horas sem nenhum output
 		}
-		
-		// Uma vez que o programa foi rodado para cada um dos vetores e os tempo médio adquiridos, é chamado o método que será responsável pela exibição do vetor
-		exibirTempo(exec_time_greatest, tamanhos);
 	}
 	
 	// Método que irá criar os vetores de mesmo tamanho para cada uma das sementes
@@ -99,7 +95,7 @@ public class Simulacao {
 			if (i<3 && v.length>=810000) {
 				exec_time_inner[i] = 0.0;
 			} else {
-				exec_time_inner[i] = calc_tempo(v, i);
+				exec_time_inner[i] = calc_tempo(v, i, 10); // parâmetros: v (vetor passado), i (indica o algoritmo que será rodado, inteiro (indica o número de vezes que cada algoritmo será rodado para cada vetor)
 			}
 		}
 		// Retorna o tempo de execução médio
@@ -107,17 +103,17 @@ public class Simulacao {
 	}
 	
 	// Método responsável por rodar 10 vezes um mesmo algoritmos sobre um mesmo vetor e retornar a média do tempo dessas ordenações
-	public static double calc_tempo(int[] v, int a) {
+	public static double calc_tempo(int[] v, int a, int vezes) {
 		int[] auxiliar; // Para evitar que uma vez ordenado, o vetor contamine as demais execuções por facilitar o trabalho dos algoritmos, é criado um vetor clone
 		
 		long soma = 0; // A variável soma recebe a soma de todos os tempos que os algoritmos levaram para ordenar
 		long inicio, fim; // A variável inicio armazena o tempo do sistema quando o algoritmo é chamado, e a fim quando termina
 		double media; // Como cada algoritmo será rodado 10 vezes, a média será igual a soma / 10
 		
-		// É analisado o valor do parâmetro a, que indica o algoritmo a ser rodado (só será rodado 1 algoritmo)
+		// É analisado o valor do parâmetro a, que indica o algoritmo a ser rodado (só será rodado 1 algoritmo) 'vezes' vezes. 
 		switch (a) {
 			case 0: // Bubble Sort
-				for (int i=0; i<10; ++i) {
+				for (int i=0; i<vezes; ++i) {
 					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
 					inicio = System.nanoTime();
 					SortingAlgs.bubbleSort(auxiliar);
@@ -126,7 +122,7 @@ public class Simulacao {
 				}
 				break;
 			case 1: // Selection Sort
-				for (int i=0; i<10; ++i) {
+				for (int i=0; i<vezes; ++i) {
 					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
 					inicio = System.nanoTime();
 					SortingAlgs.selectionSort(auxiliar);
@@ -135,7 +131,7 @@ public class Simulacao {
 				}
 				break;
 			case 2: // Insertion Sort
-				for (int i=0; i<10; ++i) {
+				for (int i=0; i<vezes; ++i) {
 					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
 					inicio = System.nanoTime();
 					SortingAlgs.insertionSort(auxiliar);
@@ -144,7 +140,7 @@ public class Simulacao {
 				}
 				break;
 			case 3: // Shell Sort
-				for (int i=0; i<10; ++i) {
+				for (int i=0; i<vezes; ++i) {
 					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
 					inicio = System.nanoTime();
 					SortingAlgs.shellSort(auxiliar);
@@ -153,7 +149,7 @@ public class Simulacao {
 				}
 				break;
 			case 4: // Merge Sort
-				for (int i=0; i<10; ++i) {
+				for (int i=0; i<vezes; ++i) {
 					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
 					inicio = System.nanoTime();
 					SortingAlgs.mergeSort(auxiliar);
@@ -162,7 +158,7 @@ public class Simulacao {
 				}
 				break;
 			case 5: // Quick Sort
-				for (int i=0; i<10; ++i) {
+				for (int i=0; i<vezes; ++i) {
 					auxiliar = v.clone(); // O vetor auxiliar recebe uma cópia do vetor v no inicio de cada execução
 					inicio = System.nanoTime();
 					SortingAlgs.quickSort(auxiliar, 0, auxiliar.length-1);
@@ -173,15 +169,14 @@ public class Simulacao {
 			default:
 				break;
 		}
-		media = (double) soma / Math.pow(10, 10); // Divide-se por 10 pois a variável soma armazena a soma de 10 execuções e divide-se por 10^9 por ser em nanossegundo
+		media = (double) soma / (Math.pow(10, 9)*vezes); // Divide-se por 'vezes' pois a variável soma armazena a soma de "vezes" execuções e divide-se por 10^9 por ser em nanossegundo
 		return media;
 	}
 	
 	// Método responsável por exibir os tempos de ordenação médios de cada algoritmo para cada tamanho de vetor
-	public static void exibirTempo(double[][] exec_time_greatest, int[] tam) {
+	public static void exibirTempo(double[][] exec_time_greatest, int[] tam, int i) { // É passado o vetor do jeito em que está, junto com o vetor dos tamanhos e o índice que indica qual tamanho de vetor foi completamente ordenado por todos os algoritmos
 		String algoritmo;
 		// Laço for exterior para iterar sobre os tamanhos do vetores
-		for (int i=0; i<tam.length; ++i) {
 			System.out.printf("Tempo de execucao medio dos algoritmos para vetores de %d elementos. \n\n", tam[i]);
 			// Laço for interior para iterar sobre cada tempo de ordenação médio
 			for (int j=0; j<6; ++j) {
@@ -189,7 +184,6 @@ public class Simulacao {
 				System.out.printf(" %s: %.5f segundos.\n", algoritmo, exec_time_greatest[i][j]);
 			}
 			System.out.println();
-		}
 	}
 	
 	// Método que fornece o nome do algoritmo a partir do seu índice
