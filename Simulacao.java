@@ -2,7 +2,7 @@ package Ordenação;
 
 import java.util.Random;
 
-//   Tempo Estimado de Execução ~ unknow
+//   Tempo Estimado de Execução ~ unknown
 
 /*
   *  - pouco eficientes (BubleSort, SelectSort e InsertionSort)
